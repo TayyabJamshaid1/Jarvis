@@ -1,11 +1,12 @@
 import speech_recognition as sr
 import webbrowser
+import requests
 import pyttsx3
 import naatLibrary
 # Initialize the recognizer and text-to-speech engine
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
-
+apiKey="2a986f97974e40f6975e0f4b6ddd59fc"
 def speak(text):
     engine.say(text)
     engine.runAndWait()
@@ -30,7 +31,15 @@ def process_command(c):
           link=naatLibrary.naat[naat_name.lower()]
           speak(f"Playing {naat_name}")
           webbrowser.open(link)
-
+     elif "news" in c.lower():
+          r=requests.get(f"https://newsapi.org/v2/top-headlines?country=us&apiKey={apiKey}")
+          print(r)
+          if r.status_code == 200:
+               data = r.json()
+               print(data,"data")
+               articles = data.get("articles", [])
+               for article in articles:
+                    speak(article["title"])
 
 if __name__ == "__main__":
     speak("Initializing Jarvis")
