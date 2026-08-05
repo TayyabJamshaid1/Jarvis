@@ -1,7 +1,7 @@
 import speech_recognition as sr
 import webbrowser
 import pyttsx3
-
+import naatLibrary
 # Initialize the recognizer and text-to-speech engine
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
@@ -12,7 +12,26 @@ def speak(text):
 
 def process_command(c):
      print("Processing command: " + c)
-     pass
+     if "open google" in c.lower():
+          speak("Opening Google")
+          webbrowser.open("https://www.google.com")
+     elif "open youtube" in c.lower():
+          speak("Opening YouTube")
+          webbrowser.open("https://www.youtube.com")
+     elif "open facebook" in c.lower():
+          speak("Opening Facebook")
+          webbrowser.open("https://www.facebook.com")
+     elif "open instagram" in c.lower():
+          speak("Opening Instagram")
+          webbrowser.open("https://www.instagram.com")
+     elif c.lower().startswith("play"):
+          print("Playing naat")
+          naat_name=c.split(" ")[1]
+          print("Naat name: " + naat_name.lower())
+          link=naatLibrary.naat[naat_name.lower()]
+          speak(f"Playing {naat_name}")
+          webbrowser.open(link)
+
 
 if __name__ == "__main__":
     speak("Initializing Jarvis")
@@ -29,7 +48,7 @@ if __name__ == "__main__":
                     word = recognizer.recognize_google(audio)
                     print("You said: " + word)
                     if (word.lower()=="hello"):
-                        speak("Yes Sir, How can I help you?")
+                        speak("Yeah")
                         with sr.Microphone() as source:
                              print("Jarvis Active ")
                              audio = recognizer.listen(source,timeout=5, phrase_time_limit=5)
