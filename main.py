@@ -25,7 +25,6 @@ def process_command(c):
           speak("Opening Instagram")
           webbrowser.open("https://www.instagram.com")
      elif c.lower().startswith("play"):
-          print("Playing naat")
           naat_name=c.split(" ")[1]
           print("Naat name: " + naat_name.lower())
           link=naatLibrary.naat[naat_name.lower()]
